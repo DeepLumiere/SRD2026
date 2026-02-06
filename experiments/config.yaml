@@ -1,0 +1,53 @@
+# SRD2026 Configuration File
+
+# Model configuration
+model:
+  name: "srd_model"
+  backbone: "clip-vit-large"
+  llm: "llama-2-7b"
+  hidden_dim: 768
+  num_layers: 12
+
+# Training configuration
+training:
+  batch_size: 32
+  num_epochs: 50
+  learning_rate: 1e-4
+  weight_decay: 0.01
+  warmup_steps: 1000
+  gradient_clip: 1.0
+  mixed_precision: true
+
+# Data configuration
+data:
+  train_path: "data/train"
+  val_path: "data/val"
+  test_path: "data/test"
+  image_size: 224
+  max_length: 128
+  num_workers: 4
+
+# Optimization
+optimizer:
+  type: "adamw"
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# Scheduler
+scheduler:
+  type: "cosine"
+  min_lr: 1e-6
+
+# Logging
+logging:
+  log_interval: 100
+  eval_interval: 1000
+  save_interval: 5000
+  wandb: true
+  project_name: "srd2026"
+
+# Evaluation
+evaluation:
+  metrics: ["bleu", "meteor", "rouge", "cider"]
+  beam_size: 3
+  temperature: 0.7
