@@ -15,8 +15,10 @@ If you find a bug or have a feature request, please open an issue on GitHub with
 ### Contributing Code
 
 1. **Fork the repository**
+   - Click the "Fork" button on GitHub, or
+   - Use the GitHub CLI:
    ```bash
-   git fork https://github.com/DeepLumiere/SRD2026.git
+   gh repo fork DeepLumiere/SRD2026 --clone
    ```
 
 2. **Create a new branch**
