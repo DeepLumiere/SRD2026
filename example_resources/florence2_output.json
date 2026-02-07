@@ -1,0 +1,19 @@
+{
+  "source": "../example_resources/sample_image.jpg",
+  "results": {
+    "Object Detection": {
+      "bboxes": [
+        [
+          0.5120000243186951,
+          0.3840000033378601,
+          1023.488037109375,
+          767.6160278320312
+        ]
+      ],
+      "labels": [
+        "whiteboard"
+      ]
+    },
+    "OCR": "Inside chip?\nPullup Resistor\nVariable\nResistor\nResensor Pin\n"
+  }
+}
