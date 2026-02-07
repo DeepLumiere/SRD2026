@@ -1,16 +1,16 @@
 # See, Read, Describe: Entity-Grounded Captioning with Multimodal LLMs
 <p align="center">
   <a href="https://github.com/DeepLumiere/SRD2026">
-    <img src="https://img.shields.io/badge/Paper-GRAIL--CVPR%202026-blue" />
+    <img src="https://img.shields.io/badge/Paper-GRAIL--CVPR%202026-blue"/>
   </a>
   <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>
   </a>
   <a href="https://www.python.org/downloads/">
-    <img src="https://img.shields.io/badge/python-3.13+-blue.svg" />
+    <img src="https://img.shields.io/badge/python-3.13+-blue.svg"/>
   </a>
   <a href="https://pytorch.org/">
-    <img src="https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg" />
+    <img src="https://img.shields.io/badge/PyTorch-2.10+-ee4c2c.svg"/>
   </a>
 </p>
 ## Overview
