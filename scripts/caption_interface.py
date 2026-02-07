@@ -1,3 +1,4 @@
+# python
 import os
 import sys
 import subprocess
@@ -5,10 +6,12 @@ import time
 import json
 import platform
 import shutil
+import base64
 
 # --- Configuration ---
 MODEL_NAME = "ministral-3:8b"
 JSON_SOURCE = "../example_resources/florence2_output.json"
+IMAGE_SOURCE = "../example_resources/sample_image.jpg"
 OLLAMA_API_URL = "http://localhost:11434"
 
 
@@ -32,6 +35,7 @@ def install_python_deps():
 
 install_python_deps()
 import requests
+
 def is_ollama_installed():
     return shutil.which("ollama") is not None
 
@@ -159,19 +163,34 @@ def load_context_data(filepath):
         sys.exit(1)
 
 
-def query_llm(prompt):
+def encode_image_to_base64(image_path):
+    if not os.path.exists(image_path):
+        print(f"⚠️ [Image] Not found: {image_path} -- proceeding without image.")
+        return None
+    try:
+        with open(image_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("utf-8")
+        return encoded
+    except Exception as e:
+        print(f"⚠️ [Image] Failed to read/encode image: {e} -- proceeding without image.")
+        return None
+
+
+def query_llm(prompt, image_b64=None):
     payload = {
         "model": MODEL_NAME,
         "prompt": prompt,
+        "images": [image_b64],
         "stream": False,
         "options": {
             "temperature": 0.1,
             "num_ctx": 2048,
             "num_predict": 150,
             "top_k": 20,
-            "top_p": 0.
+            "top_p": 0.0
         }
     }
+
     try:
         res = requests.post(f"{OLLAMA_API_URL}/api/generate", json=payload)
         return res.json().get("response", "<No response>")
@@ -189,16 +208,17 @@ def main():
     obj_str = ", ".join(objs) if objs else "None detected"
     text_str = texts if texts.strip() else "None visible"
 
-    print(f"   > Image: {img_source}")
-    print(f"   > Context: {len(objs)} objects, {len(text_str)} chars of text.")
+    print(f"   > Image (from Florence): {img_source}")
+    print(f"   > Context: {len(obj_str)} objects, {len(text_str)} chars of text.")
+
+    image_b64 = encode_image_to_base64(IMAGE_SOURCE)
 
     prompt_a = (
-        f"Write a strictly factual, visual description of this image for a dataset. "
+        f"Write a strictly factual description of this image. "
         f"Describe the objects, actions, and setting objectively. "
-        f"Do NOT interpret emotions, atmosphere, or marketing appeal. "
-        f"Do NOT use titles or bullet points. "
+        f"Quote the text exactly as it appears on the signage/objects. "
         f"Do NOT start with 'Here is a caption' or 'This image shows'. "
-        f"Start directly with the subject."
+        f"Start directly with the caption."
     )
 
     prompt_b = (
@@ -208,9 +228,8 @@ def main():
         f"Text visible: [{texts}]. "
         f"Instructions: Merge these details naturally into a single descriptive paragraph. "
         f"Quote the text exactly as it appears on the signage/objects. "
-        f"Do NOT list the items separately. "
-        f"Do NOT use promotional language (e.g., 'stunning', 'perfect'). "
-        f"Start directly with the subject."
+        f"Do NOT start with 'Here is a caption' or 'This image shows'. "
+        f"Start directly with the caption."
     )
 
     print("\n" + "=" * 50)
@@ -218,13 +237,13 @@ def main():
     print("=" * 50)
 
     print("\n--- 1. Blind Inference (No Context) ---")
-    res_a = query_llm(prompt_a)
+    res_a = query_llm(prompt_a, image_b64=image_b64)
     print(f"\n{res_a.strip()}")
 
     print("\n" + "-" * 50)
 
     print("\n--- 2. Grounded Inference (With Explicit Context) ---")
-    res_b = query_llm(prompt_b)
+    res_b = query_llm(prompt_b, image_b64=image_b64)
     print(f"\n{res_b.strip()}")
 
     print("\n" + "=" * 50)
