@@ -1,17 +1,14 @@
 # See, Read, Describe: Entity-Grounded Captioning with Multimodal LLMs
-
-<div align="center">
 [![Paper](https://img.shields.io/badge/Paper-GRAIL--CVPR%202026-blue)](https://github.com/DeepLumiere/SRD2026)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
-</div>
 
-## 📋 Overview
+## Overview
 This repository contains the official implementation of **"See, Read, Describe: Entity-Grounded Captioning with Multimodal LLMs"**, submitted to GRAIL-CVPR 2026.
 **Abstract**: Multimodal Large Language Models (MLLMs) have achieved remarkable linguistic and visual fluency, yet they are prone to hallucinating textual content in natural scenes due to weak visual grounding. In this paper, we investigated the efficacy of traditional end-to-end inference in text-rich environments with a staged reasoning framework that decouples perception from narrative generation. By evaluating three open-source MLLMs, namely: Gemma3-12B, Ministral3-8B, and Qwen2.5-VL-7B, we quantified the performance gains achieved when images are assisted with explicit context extracted using the off-the-shelf Florence-2-large model. We observed that explicit context extraction before captioning yields a 2-fold increase in Grounding IoU and OCR Recall across most architectures. Further, through blind human evaluation, we observed gains in quality/coverage of captions, while reducing the hallucination rate. It also revealed critical insight, like overloading of context in Gemma3-12B degraded performance, which we conclude by proposing saliency-based filtering for future work.
-![Framework]{graphics/framework.png}
-## 🎯 Key Features
+![Framework](graphics/framework.png)
+## Key Features
 
 - **Entity-Grounded Captioning**: Novel approach for generating descriptions grounded on explicitly extracted entities
 - **Reproducible Results**: Full inference and evaluation code provided
@@ -98,7 +95,7 @@ If you find this work useful for your research, please cite:
 ```bibtex
 YET TO PUBLISH
 ```
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
